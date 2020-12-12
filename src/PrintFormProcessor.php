@@ -3,6 +3,7 @@
 namespace Mnvx\EloquentPrintForm;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class PrintFormProcessor
@@ -21,13 +22,13 @@ class PrintFormProcessor
 
     /**
      * @param string $templateFile
-     * @param Model $entity
+     * @param Model|array $entity
      * @param callable[] $customSetters Keys are variables, values are callbacks
      * with signature callback(TemplateProcessor $processor, string $variable, ?string $value)
      * @return string Temporary file name with processed document
      * @throws PrintFormException
      */
-    public function process(string $templateFile, Model $entity, array $customSetters = []): string
+    public function process(string $templateFile, $entity, array $customSetters = []): string
     {
         try {
             $templateProcessor = new TemplateProcessor($templateFile);
@@ -93,13 +94,13 @@ class PrintFormProcessor
     }
 
     /**
-     * @param Model $entity
+     * @param Model|array $entity
      * @param string $variable
      * @param Tables|null $tables
      * @return array [value, is table]
      * @throws PrintFormException
      */
-    protected function getValue(Model $entity, string $variable, Tables $tables = null): array
+    protected function getValue($entity, string $variable, Tables $tables = null): array
     {
         $pipes = explode('|', $variable);
         $parts = explode('.', array_shift($pipes));
@@ -107,17 +108,24 @@ class PrintFormProcessor
         $prefix = '';
         foreach ($parts as $part) {
             $prefix .= $part . '.';
-            if (!is_object($current) && ! $current instanceof \Traversable) {
+            if (!is_object($current) && ! $current instanceof \Traversable && !is_array($current)) {
                 $current = '';
                 break;
             }
             try {
-                $current = $current->$part;
+
+                if (is_array($current)) {
+                    $current = Arr::get($current, $part);
+                } else {
+                    $current = $current->$part;
+                }
             } catch (\Throwable $e) {
                 $current = '';
                 break;
             }
+
             if ($current instanceof \Traversable) {
+//                dd($current);
                 if ($tables) {
                     $tables->add($variable, $current, $prefix);
                 }
