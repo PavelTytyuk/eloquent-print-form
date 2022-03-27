@@ -142,6 +142,6 @@ class PrintFormProcessor
                     $e->getMessage());
             }
         }
-        return [$current, false];
+        return [htmlspecialchars($current), false];
    }
 }
