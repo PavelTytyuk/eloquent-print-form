@@ -17,6 +17,8 @@ class PrintFormProcessor
         $this->tmpPrefix = $tmpPrefix;
         if ($pipes === null) {
             $this->pipes = new Pipes();
+        } else {
+            $this->pipes = $pipes;
         }
     }
 
