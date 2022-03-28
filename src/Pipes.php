@@ -19,7 +19,7 @@ class Pipes
         string $datetimeFormat = 'd.m.Y H:i:s',
         int $decimals = 2,
         string $decPoint = '.',
-        string $thousandsSep = '`'
+        string $thousandsSep = ','
     )
     {
         $this->placeholder = $placeholder;
