@@ -60,8 +60,8 @@ class PrintFormProcessor
         foreach ($tables->get() as $table) {
             $this->processTable($table, $templateProcessor);
         }
-        $tempFolder = resource_path('print_templates/temp');
-        $tempFileName = tempnam($tempFolder, $this->tmpPrefix);
+        
+        $tempFileName = tempnam(sys_get_temp_dir(), $this->tmpPrefix);
         $templateProcessor->saveAs($tempFileName);
         return $tempFileName;
     }
