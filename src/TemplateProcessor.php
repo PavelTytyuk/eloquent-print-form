@@ -257,7 +257,7 @@ class TemplateProcessor extends \PhpOffice\PhpWord\TemplateProcessor
 //     * @param string $blockType XML tag type of block
 //     * @return \PhpOffice\PhpWord\TemplateProcessor Fluent interface
 //     */
-    protected function replaceXmlBlock($macro, $block, $blockType = 'w:p')
+    public function replaceXmlBlock($macro, $block, $blockType = 'w:p')
     {
         $part = $this->tempDocumentMainPart;
 //        dd($part);
