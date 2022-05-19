@@ -4,7 +4,7 @@ namespace Mnvx\EloquentPrintForm;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use PhpOffice\Common\XMLWriter;
+use PhpOffice\PhpWord\Shared\XMLWriter;
 use PhpOffice\PhpWord\Exception\Exception;
 
 class TemplateProcessor extends \PhpOffice\PhpWord\TemplateProcessor
