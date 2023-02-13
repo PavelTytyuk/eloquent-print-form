@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^7.4|^8",
-        "illuminate/database": "^9.0",
+        "illuminate/database": "^10.0",
         "nesbot/carbon": "^2.57",
         "phpoffice/phpword": "^0.18"
     }
